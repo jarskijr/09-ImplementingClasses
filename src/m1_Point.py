@@ -5,6 +5,7 @@ NOTE: This is NOT rosegraphics -- it is your OWN Point class.
 Authors: David Mutchler, Vibha Alangar, Dave Fisher, Amanda Stouder,
          their colleagues and Jacob Jarski.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+import math
 
 class Point(object):
     " " " Holds data for a 2d point (x and y) and their operations. """
@@ -12,6 +13,8 @@ class Point(object):
         """Init gives values to the instance variables."""
         self.x = x
         self.y = y
+        self.startx = x
+        self.starty = y
         self.counter = 0
     def __repr__(self):
         return "Point({}, {})".format(self.x, self.y)
@@ -27,8 +30,10 @@ class Point(object):
         self.counter = self.counter + 1
     def get_number_of_moves_made(self):
         return self.counter
-    def get_distance_from(self, x, y):
-
+    def get_distance_from(self, point):
+        return math.sqrt(((point.x - self.x) ** 2) + ((point.y - self.y) ** 2))
+    def get_distance_from_start(self):
+        return math.sqrt(((self.startx - self.x) ** 2) + ((self.starty - self.y) ** 2))
 
 
 
@@ -703,7 +708,7 @@ def run_test_get_distance_from():
         print('Actual   p2 to p4:', p2.get_distance_from(p4))
     """
     # -------------------------------------------------------------------------
-    # TODO: 9.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 9.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_distance_from  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -798,7 +803,7 @@ def run_test_get_distance_from_start():
         print('Actually is:', p2.get_distance_from_start())
     """
     # -------------------------------------------------------------------------
-    # TODO: 10.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 10.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_distance_from_START  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -806,6 +811,36 @@ def run_test_get_distance_from_start():
     print('Testing the   get_distance_from_START   method')
     print('of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(20, 30)
+    p1.move_to(111, 222)
+    p1.move_by(10, 20)
+    p1.move_to(0, 0)
+    p1.move_to(21, 31)
+    print()
+    print('p1 from start to (21, 31), should be about 1.414')
+    print('Actually is:', p1.get_distance_from_start())
+
+    p1.move_by(29, 39)
+    print()
+    print('p1 from start to (50, 70), should be about 50.0')
+    print('Actually is:', p1.get_distance_from_start())
+
+    p2 = Point(1, 1)
+    print()
+    print('p2 from start to (1, 1), should be about 0.0')
+    print('Actually is:', p2.get_distance_from_start())
+
+    p2.move_to(11, 1)
+    print()
+    print('p2 from start to (11, 1), should be about 10.0')
+    print('Actually is:', p2.get_distance_from_start())
+
+    p2.move_to(999, 999)
+    p2.move_to(1, 1)
+    print()
+    print('p2 from start to (1, 1), should be about 0.0')
+    print('Actually is:', p2.get_distance_from_start())
 
 
 def run_test_get_distance_traveled():
